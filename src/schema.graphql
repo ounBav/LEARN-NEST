@@ -1,0 +1,56 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type User {
+  id: Int
+  first_name: String
+  last_name: String
+  username: String
+  email: String
+  password: String
+  role: String
+  status: String
+}
+
+type Query {
+  getUsers: [User!]!
+  getUserById: User!
+}
+
+type Mutation {
+  userLogin(LogingInput: LoginInput!): User!
+  createUser(CreateUserInput: CreateUserInput!): User!
+}
+
+input LoginInput {
+  """username of the user"""
+  username: String!
+
+  """password of the user"""
+  password: String!
+  deviceToken: String!
+}
+
+input CreateUserInput {
+  first_name: String!
+  last_name: String!
+  username: String!
+  email: String!
+  password: String!
+  role: UserRole!
+  status: UserStatus!
+}
+
+enum UserRole {
+  ADMIN
+  PARTNER
+  LOCAL_BRAND
+  STUFF
+  GUEST
+}
+
+enum UserStatus {
+  ACTIVE
+  IN_ACTIVE
+}
