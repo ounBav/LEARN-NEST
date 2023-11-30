@@ -1,6 +1,5 @@
-import { registerEnumType } from "@nestjs/graphql";
-
 /* eslint-disable prettier/prettier */
+import { registerEnumType } from "@nestjs/graphql";
 export enum UserRole {
   ADMIN = 'Admin',
   PARTNER = 'partner',
@@ -10,10 +9,11 @@ export enum UserRole {
 }
 
 
-export enum UserStatus {
+export enum EntityStatus {
     ACTIVE = 'active',
     IN_ACTIVE = 'in_active',
+    DELETE = 'delete',
 }
 
-registerEnumType(UserStatus, { name: 'UserStatus' });
+registerEnumType(EntityStatus, { name: 'EntityStatus' });
 registerEnumType(UserRole, { name: 'UserRole' });

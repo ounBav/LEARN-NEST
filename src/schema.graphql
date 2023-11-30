@@ -9,9 +9,30 @@ type User {
   username: String
   email: String
   password: String
-  role: String
+  roleId: Int!
   status: String
+  role: Role
 }
+
+type Role {
+  id: Int!
+  name: String!
+  description: String
+  status: EntityStatus!
+  createdAt: DateTime
+  upatedAt: DateTime
+}
+
+enum EntityStatus {
+  ACTIVE
+  IN_ACTIVE
+  DELETE
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
 
 type Query {
   getUsers: [User!]!
@@ -21,6 +42,7 @@ type Query {
 type Mutation {
   userLogin(LogingInput: LoginInput!): User!
   createUser(CreateUserInput: CreateUserInput!): User!
+  sendNotification(input: NotificationInput!): Boolean!
 }
 
 input LoginInput {
@@ -29,7 +51,7 @@ input LoginInput {
 
   """password of the user"""
   password: String!
-  deviceToken: String!
+  deviceToken: String
 }
 
 input CreateUserInput {
@@ -38,19 +60,12 @@ input CreateUserInput {
   username: String!
   email: String!
   password: String!
-  role: UserRole!
-  status: UserStatus!
+  roleId: Float!
+  status: EntityStatus!
 }
 
-enum UserRole {
-  ADMIN
-  PARTNER
-  LOCAL_BRAND
-  STUFF
-  GUEST
-}
-
-enum UserStatus {
-  ACTIVE
-  IN_ACTIVE
+input NotificationInput {
+  title: String!
+  body: String
+  to: String
 }
