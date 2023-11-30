@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from 'src/entities';
@@ -40,7 +41,7 @@ export class UserService {
     USER.username = createUser.username;
     USER.email = createUser.email;
     USER.password = password;
-    USER.role = createUser.role;
+    USER.roleId = createUser.roleId;
     USER.status = createUser.status;
     await this.userRepository.save(USER);
     return USER;

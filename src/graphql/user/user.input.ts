@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { Field, InputType } from '@nestjs/graphql';
-import { UserRole, UserStatus } from 'src/common/types/enum';
+import { UserRole, EntityStatus } from 'src/common/types/enum';
 
 @InputType()
 export class CreateUserInput {
@@ -20,9 +20,9 @@ export class CreateUserInput {
     @Field(() => String!)
     password:string
 
-    @Field(() => UserRole!)
-    role:UserRole
+    @Field(() => Number!)
+    roleId: number
 
-    @Field(() => UserStatus)
-    status:UserStatus
+    @Field(() => EntityStatus)
+    status:EntityStatus
 }

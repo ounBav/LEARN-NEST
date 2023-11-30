@@ -21,8 +21,8 @@ export class User {
   @Field(() => String, {nullable : true})
   password: string;
 
-  @Field(() => String, {nullable : true})
-  role: string;
+  @Field(() => Int!)
+  roleId: number;
 
   @Field(() => String, {nullable : true})
   status: string;
