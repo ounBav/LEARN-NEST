@@ -13,7 +13,7 @@ export class LoginInput {
   @IsNotEmptyString()
   password!: string;
 
-  @Field(() => String)
+  @Field(() => String, {nullable: true})
   @IsOptionalString()
   deviceToken!: string;
 }
