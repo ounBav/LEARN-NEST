@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
-import { UserRole, UserStatus } from 'src/common/types/enum';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { EntityStatus } from 'src/common/types/enum';
+import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
 @Entity('Users')
 export class UserEntity {
@@ -22,9 +22,15 @@ export class UserEntity {
   @Column({type: 'varchar', nullable: false})
   password: string;
 
-  @Column({type: 'enum', enum: UserRole , default: UserRole.GUEST})
-  role: string;
+  @Column({ nullable: true, type: "int8" })
+  roleId!: number
 
-  @Column({type: 'enum', enum: UserStatus , default: UserStatus.ACTIVE})
+  @CreateDateColumn({type: "timestamptz"})
+  createdAt!: Date;
+  
+  @UpdateDateColumn({type: "timestamptz"})
+  updatedAt!: Date;
+
+  @Column({type: 'enum', enum: EntityStatus , default: EntityStatus.ACTIVE})
   status: string;
 }
