@@ -4,24 +4,22 @@ import { IsNotEmptyString } from 'src/common';
 
 @InputType()
 export class NotificationInput {
+  @Field(() => String)
+  @IsNotEmptyString()
+  title!: string;
 
-    @Field(() => String)
-    @IsNotEmptyString()
-    title!: string
+  @Field(() => String, { nullable: true })
+  body?: string;
 
-    @Field(() => String, { nullable: true })
-    body?: string;
-
-    @Field(() => String, { nullable: true })
-    to?: string;
+  @Field(() => String, { nullable: true })
+  to?: string;
 }
 
 @ArgsType()
-export class NotificationArg extends NotificationInput{}
+export class NotificationArg extends NotificationInput {}
 
 @InputType()
-
 export class FirebaseUserId {
-    @Field(() => String)
-    userId: string;
+  @Field(() => String)
+  userId: string;
 }

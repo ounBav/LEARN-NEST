@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
-import { ArgsType, Field } from "@nestjs/graphql";
-import { IsNotEmptyString } from "src/common";
+import { ArgsType, Field } from '@nestjs/graphql';
+import { IsNotEmptyString } from 'src/common';
 
 @ArgsType()
 export class SendWebNotificationArgs {

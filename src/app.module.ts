@@ -5,7 +5,7 @@ import { Module } from '@nestjs/common';
 import { AppService } from './app.service';
 import { ScheduleModule } from '@nestjs/schedule';
 import { GraphQLConfigModule } from './graphql/graphql.module';
-import { ApiModule } from './graphql/api/api.module';
+import { ApiModule } from './api/api.module';
 
 @Module({
   imports: [

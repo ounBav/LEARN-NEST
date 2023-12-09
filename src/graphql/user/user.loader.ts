@@ -8,14 +8,15 @@ import { Role } from '../role/rolse.model';
 
 @Injectable({ scope: Scope.REQUEST })
 export class UserLoader {
-    constructor(@InjectRepository(RoleEntity) private RoleRepo: Repository<RoleEntity>){}
+  constructor(
+    @InjectRepository(RoleEntity) private RoleRepo: Repository<RoleEntity>,
+  ) {}
 
-    readonly findRoleId = new DataLoader< number, Role >(async ids => {
+  readonly findRoleId = new DataLoader<number, Role>(async (ids) => {
+    const roleIds = [...new Set(ids.filter((id) => id))];
+    if (!roleIds.length) return roleIds.map((x) => null);
+    const results = await this.RoleRepo.find({ where: { id: In(roleIds) } });
 
-        const roleIds = [...new Set(ids.filter(id => id))]
-        if (!roleIds.length) return roleIds.map(x => null)
-        const results = await this.RoleRepo.find({ where: {id: In(roleIds)} })
-    
-        return roleIds.map(id => results.find(x => x.id == id)) as any;
-    })
+    return roleIds.map((id) => results.find((x) => x.id == id)) as any;
+  });
 }

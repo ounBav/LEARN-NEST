@@ -55,7 +55,10 @@ export const IsNotEmptyString       = () => applyDecorators(IsNotEmpty(), ApiPro
 // ===========================================
 export const ApiFileBody = (fieldName: string) =>
   ApiBody({
-    schema: { type: 'object', properties: { [fieldName]: { type: 'string', format: 'binary' } } }
+    schema: {
+      type: 'object',
+      properties: { [fieldName]: { type: 'string', format: 'binary' } },
+    },
   });
 
 export const IsArrayType = <T>(e: new () => T, minSize = 1) =>
@@ -63,7 +66,7 @@ export const IsArrayType = <T>(e: new () => T, minSize = 1) =>
     ArrayMinSize(minSize),
     ValidateNested(),
     Type(() => e) as any,
-    ApiProperty({ isArray: true, type: e })
+    ApiProperty({ isArray: true, type: e }),
   );
 
 // ===========================================

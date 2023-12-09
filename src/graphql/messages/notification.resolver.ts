@@ -6,10 +6,9 @@ import { NotificationInput } from './notification.input';
 
 @Resolver()
 export class NotificationResolver {
-    constructor (private readonly service: NotificationService){}
-    @Mutation(() => Boolean)
-    sendNotification(@Args('input') input: NotificationInput): Promise<boolean>{
-        return this.service.sentNotification(input)
-    }
+  constructor(private readonly service: NotificationService) {}
+  @Mutation(() => Boolean)
+  sendNotification(@Args('input') input: NotificationInput): Promise<boolean> {
+    return this.service.sentNotification(input);
+  }
 }
-

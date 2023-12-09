@@ -6,6 +6,8 @@ import { UserEntity } from '../../entities/index';
 import { LoginInput } from './gql-auth.input';
 import { UserService } from '../user/user.service';
 import * as bcrypt from 'bcrypt';
+import { JwtService } from '@nestjs/jwt';
+import { jwtPayload } from './gql-auth.interface';
 
 @Injectable()
 export class GqlAuthService {
@@ -13,14 +15,32 @@ export class GqlAuthService {
     @InjectRepository(UserEntity)
     private userRepository: Repository<UserEntity>,
     private userService: UserService,
+    private jwtService: JwtService,
   ) {}
 
   async login(LoginInput: LoginInput) {
     const USER = await this.userService.findUserByUserName(LoginInput.username);
-    const isExistedUser = await bcrypt.compare(LoginInput.password, USER.password);
-    if(! isExistedUser){
-      throw new BadRequestException('Bad request user login')
+    const isExistedUser = await bcrypt.compare(
+      LoginInput.password,
+      USER.password,
+    );
+    if (!isExistedUser) {
+      throw new BadRequestException('Bad request user login');
     }
-    return USER
+    const jwtPayload: jwtPayload = {
+      id: USER.id,
+      first_name: USER.first_name,
+      last_name: USER.last_name,
+      username: USER.username,
+      email: USER.email,
+      role: USER.roleId,
+      status: USER.status,
+      login_date: new Date().toISOString(),
+    };
+
+    return {
+      user: USER,
+      token: this.jwtService.sign(jwtPayload),
+    };
   }
 }

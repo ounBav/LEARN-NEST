@@ -20,7 +20,6 @@ type Role {
   description: String
   status: EntityStatus!
   createdAt: DateTime
-  upatedAt: DateTime
 }
 
 enum EntityStatus {
@@ -34,14 +33,34 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+type LoginResponse {
+  user: User!
+  token: String!
+}
+
+type Chat {
+  id: Int!
+  head: String!
+  content: String!
+}
+
 type Query {
   getUsers: [User!]!
   getUserById: User!
+  getRoles: [Role!]!
+  getRole(id: RoleFilter!): Role!
+}
+
+input RoleFilter {
+  id: Int
 }
 
 type Mutation {
-  userLogin(LogingInput: LoginInput!): User!
+  userLogin(LogingInput: LoginInput!): LoginResponse!
   createUser(CreateUserInput: CreateUserInput!): User!
+  createChat(input: ChatInput!): Chat!
+  createRole(Role: CreateRoleInput!): Role!
+  updateRole(Role: UpdateRoleInput!): Role!
   sendNotification(input: NotificationInput!): Boolean!
 }
 
@@ -60,8 +79,24 @@ input CreateUserInput {
   username: String!
   email: String!
   password: String!
-  roleId: Float!
+  roleId: Int!
   status: EntityStatus!
+}
+
+input ChatInput {
+  header: String!
+  content: String
+}
+
+input CreateRoleInput {
+  name: String!
+  description: String
+}
+
+input UpdateRoleInput {
+  name: String!
+  description: String
+  id: Int!
 }
 
 input NotificationInput {

@@ -6,7 +6,7 @@ import { UserLoader } from './user.loader';
 
 @Module({
   imports: [],
-  providers:[UserResolver, UserService, UserLoader],
-  exports:[UserService]
+  providers: [UserResolver, UserService, UserLoader],
+  exports: [UserService],
 })
 export class UserModule {}

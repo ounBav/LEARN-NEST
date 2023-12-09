@@ -1,7 +1,12 @@
 /* eslint-disable prettier/prettier */
 import { Field, InputType } from '@nestjs/graphql';
 
-import { IsNotEmptyEmail, IsNotEmptyNumber, IsNotEmptyString, IsOptionalString } from '../../common/index';
+import {
+  IsNotEmptyEmail,
+  IsNotEmptyNumber,
+  IsNotEmptyString,
+  IsOptionalString,
+} from '../../common/index';
 
 @InputType()
 export class LoginInput {
@@ -13,7 +18,7 @@ export class LoginInput {
   @IsNotEmptyString()
   password!: string;
 
-  @Field(() => String, {nullable: true})
+  @Field(() => String, { nullable: true })
   @IsOptionalString()
   deviceToken!: string;
 }
