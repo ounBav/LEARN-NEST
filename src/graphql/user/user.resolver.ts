@@ -12,6 +12,8 @@ import { UserService } from './user.service';
 import { CreateUserInput } from './user.input';
 import { Role } from '../role/rolse.model';
 import { UserLoader } from './user.loader';
+import { UseGuards } from '@nestjs/common';
+import { GqlAuthGuard } from 'src/common/guards/auth.guard';
 @Resolver(() => User)
 export class UserResolver {
   constructor(
@@ -21,6 +23,7 @@ export class UserResolver {
   /**
    * Query
    */
+  @UseGuards(GqlAuthGuard)
   @Query(() => [User]!)
   getUsers() {
     return this.userService.findAllUsers();
