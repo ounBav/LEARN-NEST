@@ -14,7 +14,7 @@ export class UserLoader {
 
   readonly findRoleId = new DataLoader<number, Role>(async (ids) => {
     const roleIds = [...new Set(ids.filter((id) => id))];
-    if (!roleIds.length) return roleIds.map((x) => null);
+    if (!roleIds.length) return roleIds.map(() => null);
     const results = await this.RoleRepo.find({ where: { id: In(roleIds) } });
 
     return roleIds.map((id) => results.find((x) => x.id == id)) as any;

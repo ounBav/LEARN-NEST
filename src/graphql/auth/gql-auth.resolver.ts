@@ -8,6 +8,7 @@ import { LoginInput } from './gql-auth.input';
 @Resolver(() => GqlAuth)
 export class GqlAuthResolver {
   constructor(public readonly authService: GqlAuthService) {}
+
   @Mutation(() => LoginResponse)
   async userLogin(@Args('LogingInput') loginInput: LoginInput) {
     return await this.authService.login(loginInput);
