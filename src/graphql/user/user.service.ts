@@ -13,6 +13,11 @@ export class UserService {
     private userRepository: Repository<UserEntity>,
   ) {}
 
+  /************************
+   * QUERY
+   *
+   **********************/
+
   async findAllUsers(): Promise<UserEntity[]> {
     const USER = await this.userRepository.find();
     return USER;
@@ -32,6 +37,11 @@ export class UserService {
     const USER = await this.userRepository.findOne({ where: { username } });
     return USER;
   }
+
+  /***********************
+   *
+   *  MUTATION
+   **********************/
 
   async createUser(createUser: CreateUserInput): Promise<UserEntity> {
     const password = await bcrypt.hash(createUser.password, 10);
