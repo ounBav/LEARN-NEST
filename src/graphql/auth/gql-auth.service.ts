@@ -35,6 +35,7 @@ export class GqlAuthService {
       email: USER.email,
       role: USER.roleId,
       status: USER.status,
+      user_type: USER.userType,
       login_date: new Date().toISOString(),
     };
 

@@ -8,4 +8,5 @@ export interface jwtPayload {
   role: number;
   status: string;
   login_date: string;
+  user_type: string;
 }

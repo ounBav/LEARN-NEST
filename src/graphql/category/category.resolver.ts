@@ -4,8 +4,7 @@ import { CategoryService } from './category.service';
 import { CreateCategoryInput, updateCategoryInput } from './category.input';
 import { CurrentUser } from 'src/common/graphql-helper/current_user.helper';
 import { UserEntity } from 'src/entities';
-import { GqlAuthGuard } from 'src/common/guards/auth.guard';
-import { UseGuards } from '@nestjs/common';
+import { Auth } from 'src/common/decorator/gql-auth-decorator';
 
 @Resolver('category')
 export class CategoryResolver {
@@ -14,13 +13,13 @@ export class CategoryResolver {
   //QUERY
   //=======================
 
-  @UseGuards(GqlAuthGuard)
+  @Auth('ADMIN')
   @Query(() => [Category])
   async getCategories() {
     return this.service.getCategories();
   }
 
-  @UseGuards(GqlAuthGuard)
+  @Auth('ADMIN')
   @Query(() => [Category])
   async getCategory(@Args('id') id: number) {
     return this.service.getCategory(id);
@@ -29,7 +28,7 @@ export class CategoryResolver {
   //=======================
   //MUTATION
   //=======================
-  @UseGuards(GqlAuthGuard)
+  @Auth('ADMIN')
   @Mutation(() => Category)
   async createCategory(
     @CurrentUser() user: UserEntity,
@@ -38,7 +37,7 @@ export class CategoryResolver {
     return this.service.createCategory(user, input);
   }
 
-  @UseGuards(GqlAuthGuard)
+  @Auth('ADMIN')
   @Mutation(() => Category)
   async updateCategory(
     @CurrentUser() user: UserEntity,
@@ -47,7 +46,7 @@ export class CategoryResolver {
     return this.service.updateCategory(user, input);
   }
 
-  @UseGuards(GqlAuthGuard)
+  @Auth('ADMIN')
   @Mutation(() => Category)
   async deleteCategory(@Args('id') id: number) {
     return this.service.deleteCategory(id);

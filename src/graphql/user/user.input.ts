@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { Field, InputType, Int } from '@nestjs/graphql';
-import { EntityStatus } from 'src/common/types/enum';
+import { EntityStatus, UserTypeEnum } from 'src/common/types/enum';
 
 @InputType()
 export class CreateUserInput {
@@ -22,6 +22,9 @@ export class CreateUserInput {
   @Field(() => Int!)
   roleId: number;
 
-  @Field(() => EntityStatus)
+  @Field(() => EntityStatus, { defaultValue: EntityStatus.ACTIVE })
   status: EntityStatus;
+
+  @Field(() => UserTypeEnum, { defaultValue: UserTypeEnum.USER })
+  userType: UserTypeEnum;
 }
