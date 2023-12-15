@@ -1,5 +1,4 @@
-/* eslint-disable prettier/prettier */
-import { IsNotEmptyArrayString } from 'src/common';
+import { EntityStatus } from 'src/common/types/enum';
 import {
   Column,
   CreateDateColumn,
@@ -14,18 +13,20 @@ export class CategoryEntity {
   id: number;
 
   @Column({ type: 'varchar' })
-  @IsNotEmptyArrayString()
   name: string;
 
-  @Column({ type: 'int8' })
-  createdBy: number;
+  @Column()
+  createdBy: string;
 
-  @Column({ type: 'int8', nullable: true })
-  updatedBy: number;
+  @Column({ nullable: true })
+  updatedBy: string;
 
   @CreateDateColumn({ type: 'timestamptz' })
   createdAt: Date;
 
   @UpdateDateColumn({ type: 'timestamptz' })
   updatedAt: Date;
+
+  @Column({ type: 'enum', enum: EntityStatus, default: EntityStatus.ACTIVE })
+  status: string;
 }
