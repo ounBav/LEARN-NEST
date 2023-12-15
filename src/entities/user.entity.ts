@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { EntityStatus } from 'src/common/types/enum';
+import { EntityStatus, UserTypeEnum } from 'src/common/types/enum';
 import {
   Column,
   CreateDateColumn,
@@ -42,4 +42,7 @@ export class UserEntity {
 
   @Column({ type: 'enum', enum: EntityStatus, default: EntityStatus.ACTIVE })
   status: string;
+
+  @Column({ type: 'enum', enum: UserTypeEnum, default: UserTypeEnum.USER })
+  userType: string;
 }

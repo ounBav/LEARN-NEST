@@ -26,4 +26,7 @@ export class User {
 
   @Field(() => String, { nullable: true })
   status: string;
+
+  @Field(() => String, { nullable: true })
+  userType: string;
 }
