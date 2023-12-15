@@ -12,7 +12,7 @@ import { GqlAuthGuard } from 'src/common/guards/auth.guard';
     JwtModule.register({
       secret: jwtConstants.secret,
       signOptions: {
-        expiresIn: '1h',
+        expiresIn: '1d',
       },
     }),
   ],

@@ -7,9 +7,11 @@ import { UserModule } from './user/user.module';
 import { NotificationModule } from './messages/notification.module';
 import { RoleModule } from './role/role.module';
 import { ChatModule } from './chat/chat.module';
+import { CategoryModule } from './category/category.module';
 
 @Module({
   imports: [
+    CategoryModule,
     ChatModule,
     RoleModule,
     UserModule,

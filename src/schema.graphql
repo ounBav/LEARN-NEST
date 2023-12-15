@@ -44,9 +44,20 @@ type Chat {
   content: String!
 }
 
+type Category {
+  id: Int!
+  name: String!
+  createdBy: Int!
+  updatedBy: Int!
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
 type Query {
   getUsers: [User!]!
   getUserById: User!
+  getCategories: [Category!]!
+  getCategory(id: Float!): [Category!]!
   getRoles: [Role!]!
   getRole(id: RoleFilter!): Role!
 }
@@ -58,6 +69,9 @@ input RoleFilter {
 type Mutation {
   userLogin(LogingInput: LoginInput!): LoginResponse!
   createUser(CreateUserInput: CreateUserInput!): User!
+  createCategory(input: CreateCategoryInput!): Category!
+  updateCategory(input: updateCategoryInput!): Category!
+  deleteCategory(id: Float!): Category!
   createChat(input: ChatInput!): Chat!
   createRole(Role: CreateRoleInput!): Role!
   updateRole(Role: UpdateRoleInput!): Role!
@@ -81,6 +95,15 @@ input CreateUserInput {
   password: String!
   roleId: Int!
   status: EntityStatus!
+}
+
+input CreateCategoryInput {
+  name: String!
+}
+
+input updateCategoryInput {
+  name: String!
+  id: Int!
 }
 
 input ChatInput {
