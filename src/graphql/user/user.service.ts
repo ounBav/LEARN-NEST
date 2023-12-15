@@ -30,12 +30,16 @@ export class UserService {
     return USER;
   }
 
+  async findUserByUserName(userName: string) {
+    return this.validateUserName(userName);
+  }
+
   /***********************
    *  MUTATION
    **********************/
   async createUser(createUser: CreateUserInput): Promise<UserEntity> {
     const password = await bcrypt.hash(createUser.password, 10);
-    const user = this.userRepository.findOne({
+    const user = await this.userRepository.findOne({
       where: { username: createUser.username, status: EntityStatus.ACTIVE },
     });
 
@@ -50,11 +54,23 @@ export class UserService {
    *  PRIVATE FUNCTION
    **********************/
   async validateUser(id: string) {
-    const user = this.userRepository.findOne({
+    const user = await this.userRepository.findOne({
       where: { id, status: EntityStatus.ACTIVE },
     });
 
-    if (user) {
+    if (!user) {
+      throw new BadRequestException('User is Undefine');
+    }
+
+    return user;
+  }
+
+  async validateUserName(name: string) {
+    const user = await this.userRepository.findOne({
+      where: { username: name, status: EntityStatus.ACTIVE },
+    });
+
+    if (!user) {
       throw new BadRequestException('User is Undefine');
     }
 
