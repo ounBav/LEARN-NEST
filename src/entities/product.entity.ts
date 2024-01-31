@@ -1,5 +1,6 @@
 /* eslint-disable prettier/prettier */
-import { IsNotEmptyArrayString, IsNotEmptyNumber } from 'src/common';
+import { IsNotEmptyArrayString, IsNotEmptyString } from '../common/index';
+import { EntityStatus } from '../common/types/enum';
 import {
   Column,
   CreateDateColumn,
@@ -10,32 +11,35 @@ import {
 
 @Entity('products')
 export class ProductEntity {
-  @PrimaryGeneratedColumn({ type: 'int8' })
-  id: number;
+  @PrimaryGeneratedColumn()
+  id!: string;
 
   @Column({ type: 'varchar', length: 255 })
   @IsNotEmptyArrayString()
-  name: string;
+  name!: string;
 
   @Column({ type: 'varchar', length: 255, nullable: true, default: '-' })
-  description: string;
+  description?: string;
 
-  @Column({ type: 'int8' })
-  @IsNotEmptyNumber()
-  createdBy: number;
+  @Column({ type: 'varchar', nullable: true })
+  @IsNotEmptyString()
+  createdBy?: string;
+
+  @Column({ type: 'varchar', nullable: true })
+  updatedBy?: string;
 
   @Column({ type: 'int8', nullable: true })
-  updatedBy: number;
-
-  @Column({ type: 'int8', nullable: true })
-  imageId: number;
+  imageId?: number;
 
   @Column({ type: 'int8' })
-  categoryId: number;
+  categoryId!: number;
 
   @CreateDateColumn({ type: 'timestamptz' })
-  createdAt: Date;
+  createdAt!: Date;
 
   @UpdateDateColumn({ type: 'timestamptz' })
-  updatedAt: Date;
+  updatedAt!: Date;
+
+  @Column({ type: 'enum', enum: EntityStatus, default: EntityStatus.ACTIVE })
+  status!: string;
 }
