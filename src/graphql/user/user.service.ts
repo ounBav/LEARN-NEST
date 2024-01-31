@@ -1,10 +1,10 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UserEntity } from 'src/entities';
+import { UserEntity } from '../../entities/index';
 import { Repository } from 'typeorm';
 import { CreateUserInput } from './user.input';
 import * as bcrypt from 'bcrypt';
-import { EntityStatus } from 'src/common/types/enum';
+import { EntityStatus } from '../../common/types/enum';
 
 @Injectable()
 export class UserService {
@@ -16,7 +16,7 @@ export class UserService {
   /************************
    * QUERY
    **********************/
-  async findAllUsers(): Promise<UserEntity[]> {
+  async findAllUsers() {
     const USER = await this.userRepository.find();
     return USER;
   }
@@ -27,6 +27,9 @@ export class UserService {
 
   async findUserByEmail(email: string): Promise<UserEntity> {
     const USER = await this.userRepository.findOne({ where: { email } });
+    if (!USER) {
+      throw new BadRequestException('User is Undefine');
+    }
     return USER;
   }
 
