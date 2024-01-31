@@ -4,17 +4,17 @@ import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 @Entity('orders')
 export class OrderEntity {
   @PrimaryGeneratedColumn({ type: 'int8' })
-  id: number;
+  id!: number;
 
   @Column({ type: 'int8' })
-  paymentId: number;
+  paymentId!: number;
 
   @Column({ type: 'int8' })
-  orderBy: number;
+  orderBy!: number;
 
   @Column({ type: 'float8' })
-  totalPrice: number;
+  totalPrice!: number;
 
   @Column({ type: 'timestamptz' })
-  orderDate: Date;
+  orderDate!: Date;
 }

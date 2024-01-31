@@ -3,11 +3,11 @@ import { Field, Int, ObjectType } from '@nestjs/graphql';
 @ObjectType()
 export class Chat {
   @Field(() => Int!)
-  id: number;
+  id!: number;
 
   @Field(() => String)
-  head: string;
+  head!: string;
 
   @Field(() => String)
-  content: string;
+  content!: string;
 }

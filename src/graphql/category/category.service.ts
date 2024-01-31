@@ -4,6 +4,7 @@ import { CategoryEntity, UserEntity } from 'src/entities';
 import { Not, Repository } from 'typeorm';
 import { CreateCategoryInput, updateCategoryInput } from './category.input';
 import { EntityStatus } from 'src/common/types/enum';
+// import { EntityStatus } from '../common/types/enum';
 
 @Controller('category')
 export class CategoryService {
@@ -49,7 +50,7 @@ export class CategoryService {
     updateCategoryInput: updateCategoryInput,
   ) {
     this.validateCategory(updateCategoryInput.id);
-    const cat = this.categoryRepo.findOne({
+    const cat = await this.categoryRepo.findOne({
       where: {
         id: Not(updateCategoryInput.id),
         status: EntityStatus.ACTIVE,
@@ -65,7 +66,7 @@ export class CategoryService {
   }
   async deleteCategory(id: number) {
     const cat = this.validateCategory(id);
-    if (cat)
+    if (await cat)
       await this.categoryRepo.update(id, { status: EntityStatus.DELETE });
     return true;
   }

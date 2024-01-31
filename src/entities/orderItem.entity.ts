@@ -4,14 +4,14 @@ import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 @Entity('orderItems')
 export class OrderItemEntity {
   @PrimaryGeneratedColumn({ type: 'int8' })
-  id: number;
+  id!: number;
 
   @Column({ type: 'int8' })
-  orderId: number;
+  orderId!: number;
 
   @Column({ type: 'int8' })
-  productId: number;
+  productId!: number;
 
   @Column({ type: 'int8' })
-  quantity: number;
+  quantity!: number;
 }

@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { EntityStatus } from 'src/common/types/enum';
+import { EntityStatus, UserTypeEnum } from '../common/types/enum';
 import {
   Column,
   CreateDateColumn,
@@ -11,22 +11,22 @@ import {
 @Entity('Users')
 export class UserEntity {
   @PrimaryGeneratedColumn()
-  id: string;
-
-  @Column({ type: 'varchar', nullable: false })
-  first_name: string;
-
-  @Column({ type: 'varchar', nullable: false })
-  last_name: string;
+  id!: string;
 
   @Column({ type: 'varchar' })
-  username: string;
+  first_name!: string;
 
-  @Column({ type: 'varchar', nullable: false })
-  email: string;
+  @Column({ type: 'varchar' })
+  last_name!: string;
 
-  @Column({ type: 'varchar', nullable: false })
-  password: string;
+  @Column({ type: 'varchar' })
+  username!: string;
+
+  @Column({ type: 'varchar' })
+  email!: string;
+
+  @Column({ type: 'varchar' })
+  password!: string;
 
   @Column({ nullable: true, type: 'int8' })
   roleId!: number;
@@ -41,5 +41,8 @@ export class UserEntity {
   login_date!: Date;
 
   @Column({ type: 'enum', enum: EntityStatus, default: EntityStatus.ACTIVE })
-  status: string;
+  status!: string;
+
+  @Column({ type: 'enum', enum: UserTypeEnum, default: UserTypeEnum.USER })
+  userType!: string;
 }

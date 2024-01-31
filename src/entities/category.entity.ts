@@ -1,4 +1,4 @@
-import { EntityStatus } from 'src/common/types/enum';
+import { EntityStatus } from '../common/types/enum';
 import {
   Column,
   CreateDateColumn,
@@ -10,23 +10,23 @@ import {
 @Entity('categories')
 export class CategoryEntity {
   @PrimaryGeneratedColumn({ type: 'int8' })
-  id: number;
+  id!: number;
 
   @Column({ type: 'varchar' })
-  name: string;
+  name!: string;
 
   @Column()
-  createdBy: string;
+  createdBy!: string;
 
   @Column({ nullable: true })
-  updatedBy: string;
+  updatedBy?: string;
 
   @CreateDateColumn({ type: 'timestamptz' })
-  createdAt: Date;
+  createdAt!: Date;
 
   @UpdateDateColumn({ type: 'timestamptz' })
-  updatedAt: Date;
+  updatedAt!: Date;
 
   @Column({ type: 'enum', enum: EntityStatus, default: EntityStatus.ACTIVE })
-  status: string;
+  status!: string;
 }

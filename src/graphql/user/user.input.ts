@@ -1,27 +1,30 @@
 /* eslint-disable prettier/prettier */
 import { Field, InputType, Int } from '@nestjs/graphql';
-import { EntityStatus } from 'src/common/types/enum';
+import { EntityStatus, UserTypeEnum } from '../../common/types/enum';
 
 @InputType()
 export class CreateUserInput {
   @Field(() => String!)
-  first_name: string;
+  first_name!: string;
 
   @Field(() => String!)
-  last_name: string;
+  last_name!: string;
 
   @Field(() => String!)
-  username: string;
+  username!: string;
 
   @Field(() => String!)
-  email: string;
+  email!: string;
 
   @Field(() => String!)
-  password: string;
+  password!: string;
 
   @Field(() => Int!)
-  roleId: number;
+  roleId!: number;
 
-  @Field(() => EntityStatus)
-  status: EntityStatus;
+  @Field(() => EntityStatus, { defaultValue: EntityStatus.ACTIVE })
+  status!: EntityStatus;
+
+  @Field(() => UserTypeEnum, { defaultValue: UserTypeEnum.USER })
+  userType!: UserTypeEnum;
 }

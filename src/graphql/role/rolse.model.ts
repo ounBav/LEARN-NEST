@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { Field, GraphQLISODateTime, Int, ObjectType } from '@nestjs/graphql';
-import { EntityStatus } from 'src/common/types/enum';
+import { EntityStatus } from '../../common/types/enum';
 
 @ObjectType()
 export class Role {

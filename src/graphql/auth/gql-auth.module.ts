@@ -4,7 +4,8 @@ import { GqlAuthResolver } from './gql-auth.resolver';
 import { GqlAuthService } from './gql-auth.service';
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
-import { GqlAuthGuard } from 'src/common/guards/auth.guard';
+import { GqlAuthGuard } from './gql-auth.guard';
+import { Repository } from 'typeorm';
 
 @Module({
   imports: [
@@ -12,10 +13,10 @@ import { GqlAuthGuard } from 'src/common/guards/auth.guard';
     JwtModule.register({
       secret: jwtConstants.secret,
       signOptions: {
-        expiresIn: '1d',
+        expiresIn: '7d',
       },
     }),
   ],
-  providers: [GqlAuthService, GqlAuthResolver, GqlAuthGuard],
+  providers: [GqlAuthService, GqlAuthResolver, GqlAuthGuard, Repository],
 })
 export class GqlAuthModule {}

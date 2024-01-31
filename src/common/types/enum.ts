@@ -20,6 +20,13 @@ export enum UploadTypeEnum {
   image = 'image',
 }
 
+export enum UserTypeEnum {
+  SUPER_ADMIN = 'SUPER_ADMIN',
+  ADMIN = 'ADMIN',
+  USER = 'USER',
+}
+
 registerEnumType(EntityStatus, { name: 'EntityStatus' });
 registerEnumType(UserRole, { name: 'UserRole' });
 registerEnumType(UploadTypeEnum, { name: 'UploadTypeEnum' });
+registerEnumType(UserTypeEnum, { name: 'UserTypeEnum' });

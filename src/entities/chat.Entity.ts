@@ -9,17 +9,17 @@ import {
 @Entity('chats')
 export class ChatEntity {
   @PrimaryGeneratedColumn({ type: 'int8' })
-  id: number;
+  id!: number;
 
   @Column({ type: 'varchar', length: 255 })
-  header: string;
+  header!: string;
 
   @Column({ type: 'varchar', length: 255, nullable: true })
-  content: string;
+  content!: string;
 
   @CreateDateColumn({ type: 'timestamptz' })
-  createdAt: Date;
+  createdAt!: Date;
 
   @UpdateDateColumn({ type: 'timestamptz' })
-  updateAt: Date;
+  updateAt!: Date;
 }

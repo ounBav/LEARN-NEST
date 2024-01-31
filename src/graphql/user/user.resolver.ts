@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import {
   Args,
   Mutation,
@@ -12,40 +11,41 @@ import { UserService } from './user.service';
 import { CreateUserInput } from './user.input';
 import { Role } from '../role/rolse.model';
 import { UserLoader } from './user.loader';
-import { UseGuards } from '@nestjs/common';
-import { GqlAuthGuard } from 'src/common/guards/auth.guard';
+import { Auth } from '../../common/decorator/gql-auth-decorator';
 @Resolver(() => User)
 export class UserResolver {
   constructor(
     private userService: UserService,
     private loader: UserLoader,
   ) {}
-  /**
-   * Query
-   */
-  @UseGuards(GqlAuthGuard)
+  //==============================
+  // QUERY
+  //==============================
+  @Auth('ADMIN', 'SUPER_ADMIN')
   @Query(() => [User]!)
   getUsers() {
     return this.userService.findAllUsers();
   }
 
+  @Auth('ADMIN', 'SUPER_ADMIN')
   @Query(() => User!)
   getUserById(id: string) {
     return this.userService.findUserById(id);
   }
 
-  /**
-   * Mutation
-   */
+  //==============================
+  // MUTATION
+  //==============================
+  @Auth('ADMIN', 'SUPER_ADMIN')
   @Mutation(() => User!)
   createUser(@Args('CreateUserInput') body: CreateUserInput) {
     return this.userService.createUser(body);
   }
 
-  /**
-   * RESOLVER FIELD
-   */
-
+  //==============================
+  // RESOLVE FIELD
+  //==============================
+  @Auth('ADMIN', 'SUPER_ADMIN')
   @ResolveField(() => Role, { nullable: true })
   role(@Parent() { roleId }: User) {
     return this.loader.findRoleId.load(roleId);
