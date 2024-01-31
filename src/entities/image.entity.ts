@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { EntityStatus } from 'src/common/types/enum';
+import { EntityStatus } from '../common/types/enum';
 import {
   Column,
   CreateDateColumn,
@@ -11,20 +11,20 @@ import {
 @Entity('images')
 export class ImageEntity {
   @PrimaryGeneratedColumn({ type: 'int' })
-  id: number;
+  id!: number;
 
   @Column({ type: 'varchar' })
-  name: string;
+  name!: string;
 
   @Column({ type: 'int', nullable: true })
-  createdBy: number;
+  createdBy?: number;
 
   @CreateDateColumn({ type: 'timestamptz' })
-  createdDate: Date;
+  createdDate!: Date;
 
   @UpdateDateColumn({ type: 'timestamptz' })
-  updatedDate: Date;
+  updatedDate!: Date;
 
   @Column({ type: 'enum', enum: EntityStatus, default: EntityStatus.ACTIVE })
-  status: string;
+  status!: string;
 }

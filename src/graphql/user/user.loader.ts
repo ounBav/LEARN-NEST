@@ -2,7 +2,7 @@
 import { Injectable, Scope } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as DataLoader from 'dataloader';
-import { RoleEntity } from 'src/entities';
+import { RoleEntity } from '../../entities/index';
 import { In, Repository } from 'typeorm';
 import { Role } from '../role/rolse.model';
 

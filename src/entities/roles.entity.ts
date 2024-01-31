@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { EntityStatus } from 'src/common/types/enum';
+import { EntityStatus } from '../common/types/enum';
 import {
   Column,
   CreateDateColumn,
@@ -20,7 +20,7 @@ export class RoleEntity {
   description!: string;
 
   @Column({ type: 'int8', nullable: true })
-  createdBy: number;
+  createdBy!: number;
 
   @CreateDateColumn({ type: 'timestamptz' })
   createdAt!: Date;

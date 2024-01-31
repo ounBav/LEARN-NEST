@@ -4,14 +4,14 @@ import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 @Entity('payment')
 export class PaymentEntity {
   @PrimaryGeneratedColumn({ type: 'int8' })
-  id: number;
+  id!: number;
 
   @Column({ type: 'int8' })
-  customerId: number;
+  customerId!: number;
 
   @Column({ type: 'varchar', length: 250 })
-  paymentMethos: string;
+  paymentMethos!: string;
 
   @Column({ type: 'timestamptz' })
-  paymentDate: Date;
+  paymentDate!: Date;
 }

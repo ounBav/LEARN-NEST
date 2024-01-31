@@ -9,7 +9,7 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
   createTypeOrmOptions(): TypeOrmModuleOptions | Promise<TypeOrmModuleOptions> {
     return {
       type: 'postgres',
-      port: parseInt(process.env.DB_PORT),
+      port: parseInt(process.env.DB_PORT ?? '5432'),
       database: process.env.DB_SCHEMA,
       host: process.env.DB_HOST,
       username: process.env.DB_USERNAME,

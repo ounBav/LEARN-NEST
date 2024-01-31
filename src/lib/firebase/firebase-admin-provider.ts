@@ -7,7 +7,10 @@ import { FIREBASE_ADMIN_INJECT_TOKEN } from './firebase-admin-constand';
 export const FirebaseAdminProvider = {
   provide: FIREBASE_ADMIN_INJECT_TOKEN,
   useFactory: () => {
-    const path = resolve('.', process.env.FIREBASE_CREDENTIAL_PATH);
+    const path = resolve(
+      '.',
+      process.env.FIREBASE_CREDENTIAL_PATH ?? 'FIREBASE_ADMIN_INJECT_TOKEN',
+    );
     if (!existsSync(path)) {
       throw new Error(`Unknown file ${path}`);
     }
