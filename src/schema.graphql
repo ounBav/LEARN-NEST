@@ -54,9 +54,22 @@ type Category {
   updatedAt: DateTime
 }
 
+type Product {
+  id: Int!
+  name: String!
+  description: String
+  createdBy: Int
+  updatedBy: Int
+  createdAt: DateTime
+  updatedAt: DateTime
+  status: EntityStatus!
+}
+
 type Query {
   getUsers: [User!]!
   getUserById: User!
+  getProducts: [Product!]!
+  getProductBuyId(id: String!): Product!
   getCategories: [Category!]!
   getCategory(id: Float!): [Category!]!
   getRoles: [Role!]!
@@ -70,6 +83,9 @@ input RoleFilter {
 type Mutation {
   userLogin(LogingInput: LoginInput!): LoginResponse!
   createUser(CreateUserInput: CreateUserInput!): User!
+  createProduct(product: createProductInput!): Product!
+  updateProduct(product: updateProductInput!): Product!
+  removeProduct(id: String!): Boolean!
   createCategory(input: CreateCategoryInput!): Category!
   updateCategory(input: updateCategoryInput!): Category!
   deleteCategory(id: Float!): Category!
@@ -105,6 +121,25 @@ enum UserTypeEnum {
   USER
 }
 
+input createProductInput {
+  name: String!
+  description: String = ""
+  createdBy: String
+  updatedBy: String
+  imageId: Int
+  categoryId: Int!
+}
+
+input updateProductInput {
+  name: String!
+  description: String = ""
+  createdBy: String
+  updatedBy: String
+  imageId: Int
+  categoryId: Int!
+  id: String!
+}
+
 input CreateCategoryInput {
   name: String!
 }
@@ -132,6 +167,6 @@ input UpdateRoleInput {
 
 input NotificationInput {
   title: String!
-  body: String
-  to: String
+  body: String! = ""
+  to: String! = ""
 }

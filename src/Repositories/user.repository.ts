@@ -1,5 +1,5 @@
-import { UserEntity } from '@entities';
-import { BaseRepository } from 'src/lib/typeorm/base.repository';
+import { UserEntity } from '../entities/index';
+import { BaseRepository } from '../lib/typeorm/base.repository';
 import { EntityRepository } from 'typeorm';
 
 @EntityRepository(UserEntity)

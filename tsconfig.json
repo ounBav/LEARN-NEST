@@ -25,7 +25,7 @@
       "@lib/*": ["src/lib/*"],
       "@models": ["src/models"],
       "@queries": ["src/queries"],
-      "@repositories": ["src/repositories"],
+      "@repositories": ["src/Repositories"],
       "@schemas": ["src/schemas"]
     }
   },
