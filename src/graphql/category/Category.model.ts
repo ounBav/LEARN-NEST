@@ -4,17 +4,17 @@ import { IsNotEmptyString } from 'src/common';
 @ObjectType()
 export class Category {
   @Field(() => Int)
-  id: number;
+  id!: number;
 
   @Field(() => String)
   @IsNotEmptyString()
-  name: string;
+  name!: string;
 
   @Field(() => Int)
-  createdBy: number;
+  createdBy!: number;
 
   @Field(() => Int)
-  updatedBy: number;
+  updatedBy!: number;
 
   @Field(() => GraphQLISODateTime, { nullable: true })
   createdAt!: Date;
