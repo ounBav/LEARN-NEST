@@ -13,7 +13,7 @@ import { Repository } from 'typeorm';
     JwtModule.register({
       secret: jwtConstants.secret,
       signOptions: {
-        expiresIn: '1d',
+        expiresIn: '7d',
       },
     }),
   ],

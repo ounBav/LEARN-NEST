@@ -1,7 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
 import { UserEntity } from '../../entities/index';
 import { LoginInput } from './gql-auth.input';
 import { UserService } from '../user/user.service';
@@ -13,7 +12,6 @@ import { jwtPayload } from './gql-auth.interface';
 export class GqlAuthService {
   constructor(
     @InjectRepository(UserEntity)
-    private userRepository: Repository<UserEntity>,
     private userService: UserService,
     private jwtService: JwtService,
   ) {}

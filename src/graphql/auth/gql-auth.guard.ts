@@ -11,10 +11,10 @@ import { JwtService } from '@nestjs/jwt';
 import { jwtConstants } from './jwtConstants';
 import { GqlExecutionContext } from '@nestjs/graphql';
 import { Repository } from 'typeorm';
-import { UserEntity } from 'src/entities';
+import { RoleEntity, UserEntity } from 'src/entities';
 import { InjectRepository } from '@nestjs/typeorm';
-import { EntityStatus } from 'src/common/types/enum';
 import { jwtPayload } from './gql-auth.interface';
+import * as T from '../../common/types/enum';
 
 @Injectable()
 export class GqlAuthGuard implements CanActivate {
@@ -23,11 +23,12 @@ export class GqlAuthGuard implements CanActivate {
     private readonly jwtService: JwtService,
     @InjectRepository(UserEntity)
     private readonly userRepo: Repository<UserEntity>,
+    @InjectRepository(RoleEntity)
+    private readonly roleRepo: Repository<RoleEntity>,
   ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const roles = this.reflector.get<string[]>('roles', context.getHandler());
-    console.log(roles);
 
     const request = this.getRequest(context);
     const authToken = request.get('authorization') || '';
@@ -54,20 +55,23 @@ export class GqlAuthGuard implements CanActivate {
 
     // Validate user roles
     const user = await this.userRepo.findOne({
-      where: { id: payload.id, status: EntityStatus.ACTIVE },
+      where: { id: payload.id, status: T.EntityStatus.ACTIVE },
     });
 
     if (!user) {
       throw new ForbiddenException('Unknown User');
     }
 
-    if (!roles.length || !roles.includes(user.userType)) {
+    const role = await this.roleRepo.findOne({
+      where: { id: user.roleId, status: T.EntityStatus.ACTIVE },
+    });
+
+    if (!roles.length || !role || !roles.includes(role.name)) {
       throw new ForbiddenException('Invalid user role');
     }
 
     // Assign the payload to the request object
     request['user'] = payload;
-    console.log(payload);
 
     return true;
   }
