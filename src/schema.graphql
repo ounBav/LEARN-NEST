@@ -65,6 +65,10 @@ type Product {
   status: EntityStatus!
 }
 
+type ResultTelegram {
+  recipientAccount: String!
+}
+
 type Query {
   getUsers: [User!]!
   getUserById: User!
@@ -93,6 +97,11 @@ type Mutation {
   createRole(Role: CreateRoleInput!): Role!
   updateRole(Role: UpdateRoleInput!): Role!
   sendNotification(input: NotificationInput!): Boolean!
+  getBotDialog: Boolean!
+  botSendMessage(input: BotMessageInput!): Boolean!
+  botSendPollVote(poll: BotCreatePollVoteInput!): Boolean!
+  checkUserTelegramAcc(phone: String!): ResultTelegram!
+  sendMessageByUserName(mess: SendMessageInput!): Boolean!
 }
 
 input LoginInput {
@@ -169,4 +178,18 @@ input NotificationInput {
   title: String!
   body: String! = ""
   to: String! = ""
+}
+
+input BotMessageInput {
+  message: String!
+}
+
+input BotCreatePollVoteInput {
+  question: String!
+  options: [String!]!
+}
+
+input SendMessageInput {
+  userName: String
+  message: String
 }

@@ -6,6 +6,7 @@ import { AppService } from './app.service';
 import { ScheduleModule } from '@nestjs/schedule';
 import { GraphQLConfigModule } from './graphql/graphql.module';
 import { ApiModule } from './api/api.module';
+import { ConfigModule } from '@lib/configs';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { ApiModule } from './api/api.module';
     GqlAuthModule,
     TypeormModule,
     GraphQLConfigModule,
+    ConfigModule,
     ScheduleModule.forRoot(),
   ],
   controllers: [],

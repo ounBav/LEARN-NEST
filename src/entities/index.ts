@@ -8,3 +8,4 @@ export { OrderItemEntity } from './orderItem.entity';
 export { OrderEntity } from './order.entity';
 export { PaymentEntity } from './payment.entity';
 export { ChatEntity } from './chat.Entity';
+export { TelegramEntity } from './telegram.entity';
