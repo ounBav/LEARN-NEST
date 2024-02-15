@@ -69,6 +69,17 @@ type ResultTelegram {
   recipientAccount: String!
 }
 
+type TelegramUser {
+  firstName: String
+  lastName: String
+  phone: String
+  username: String
+  bot: Boolean
+  scam: Boolean
+  fake: Boolean
+  premium: Boolean
+}
+
 type Query {
   getUsers: [User!]!
   getUserById: User!
@@ -78,6 +89,7 @@ type Query {
   getCategory(id: Float!): [Category!]!
   getRoles: [Role!]!
   getRole(id: RoleFilter!): Role!
+  searchTelegram(search: String!): [TelegramUser!]!
 }
 
 input RoleFilter {

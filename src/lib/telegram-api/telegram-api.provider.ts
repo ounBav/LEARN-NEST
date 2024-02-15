@@ -28,9 +28,10 @@ export const TelegramApiProvider: Provider = {
       onError: (err) => console.log(err),
     });
 
-    console.log(await client.checkAuthorization());
-    await client.sendMessage('me', { message: 'Hello from Nest!' });
-    await client.connect();
+    await client.connect().then(async () => {
+      const isAuth = await client.checkAuthorization();
+      if (isAuth) console.log(`Telegram client connected ${isAuth}.`);
+    });
     client.session.save();
 
     return new TelegramApiService(client);
