@@ -22,4 +22,8 @@ export class TelegramClientService {
       mess.message,
     );
   }
+
+  async searchContact(search: string) {
+    return this.telegramApiService.searchContact(search);
+  }
 }
