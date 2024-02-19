@@ -1,11 +1,17 @@
+import { ConfigService } from '@lib/configs';
 import { BadRequestException } from '@nestjs/common';
 import { randBetween } from 'big-integer';
+import BigInteger = require('big-integer');
 import { TelegramUser } from 'src/graphql/telegram-client/telegram-client.model';
 // import { TelegramUser } from 'src/graphql/telegram-client/telegram-client.model';
 import { Api, TelegramClient } from 'telegram';
+import { TelegramApiConfig } from './telegram-api.dto';
 
 export class TelegramApiService {
-  constructor(private readonly client: TelegramClient) {}
+  constructor(
+    private readonly client: TelegramClient,
+    private readonly configService: ConfigService,
+  ) {}
   async checkAccByPhoneNumber(phoneNumber: string) {
     const result: Api.contacts.ImportedContacts = await this.client.invoke(
       new Api.contacts.ImportContacts({
@@ -48,20 +54,33 @@ export class TelegramApiService {
   }
 
   async sendMessageByUserName(userName: string, mess: string) {
-    await this.client.sendMessage(userName, { message: mess });
+    const message = await this.client.sendMessage(userName, { message: mess });
+    console.log(message);
+    setTimeout(() => {
+      this.deleteMessage(message.id);
+    }, 50000);
     return true;
+  }
+
+  async deleteMessage(id: number) {
+    const result = await this.client.invoke(
+      new Api.messages.DeleteMessages({
+        id: [id],
+        revoke: true,
+      }),
+    );
+    console.log(`Message Deleted. id = ${id}`);
+    console.log(result);
   }
 
   async searchContact(search: string) {
     const foundContacts = await this.client.invoke(
       new Api.contacts.Search({
         q: search,
-        limit: 10, // You can adjust the limit as needed
+        limit: 10,
       }),
     );
     const results: TelegramUser[] = [];
-    // results.users = foundContacts.users;
-    console.log(foundContacts.users);
     foundContacts.users.forEach((user) => {
       const customUser = {
         firstName: 'firstName' in user ? user.firstName : '',
@@ -77,4 +96,85 @@ export class TelegramApiService {
     });
     return results;
   }
+
+  async searchSticker(search: string) {
+    const result = await this.client.invoke(
+      new Api.messages.SearchStickerSets({
+        q: search,
+        hash: BigInteger('-4156887774564'),
+        excludeFeatured: true,
+      }),
+    );
+
+    console.log(result);
+
+    return true;
+  }
+
+  async sendReachIcon() {
+    const result = await this.client.invoke(
+      new Api.messages.SendReaction({
+        peer: 'me',
+        msgId: 43,
+        big: true,
+        reaction: [],
+      }),
+    );
+    console.log(result);
+    return true;
+  }
+
+  async addContact(contactInfo: AddContact) {
+    const contact = await this.client.invoke(
+      new Api.contacts.AddContact({
+        addPhonePrivacyException: contactInfo.addPhonePrivacyException,
+        id: contactInfo.username ?? contactInfo.phone,
+        firstName: contactInfo.firstName,
+        lastName: contactInfo.lastName,
+        phone: contactInfo.phone,
+      }),
+    );
+    console.log(contact);
+    return true;
+  }
+
+  async telegramSendVerifyCode() {
+    const config = this.configService.validate(
+      'TelegramApiModule',
+      TelegramApiConfig,
+    );
+    const result = await this.client.invoke(
+      new Api.auth.SendCode({
+        phoneNumber: '855888165154',
+        apiId: config.API_ID,
+        apiHash: config.API_HASH,
+        settings: new Api.CodeSettings({
+          allowFlashcall: true,
+          currentNumber: true,
+          allowAppHash: true,
+          allowMissedCall: true,
+          logoutTokens: [Buffer.from('arbitrary data here')],
+        }),
+      }),
+    );
+    console.log(result);
+    return true;
+  }
+
+  async startTelegramClient(phone: string, phoneCode: string) {
+    await this.client.start({
+      phoneNumber: async () => phone,
+      phoneCode: async () => phoneCode,
+      onError: (err) => console.log(err),
+    });
+    return true;
+  }
+}
+
+interface AddContact {
+  addPhonePrivacyException: boolean;
+  username?: string;
+  firstName: string;
+  lastName: string;
+  phone: string;
 }
