@@ -5,7 +5,6 @@ import { TelegramClient } from 'telegram';
 import { ConfigService } from '@lib/configs';
 import { TelegramApiConfig } from './telegram-api.dto';
 import { TelegramApiService } from './telegram-api.service';
-import * as I from 'input';
 
 export const TelegramApiProvider: Provider = {
   inject: [ConfigService],
@@ -21,19 +20,12 @@ export const TelegramApiProvider: Provider = {
       connectionRetries: 5,
     });
 
-    await client.start({
-      phoneNumber: async () => await I.text('number ?'),
-      password: async () => await I.text('password?'),
-      phoneCode: async () => await I.text('Code ?'),
-      onError: (err) => console.log(err),
-    });
-
     await client.connect().then(async () => {
       const isAuth = await client.checkAuthorization();
       if (isAuth) console.log(`Telegram client connected ${isAuth}.`);
     });
     client.session.save();
 
-    return new TelegramApiService(client);
+    return new TelegramApiService(client, configService);
   },
 };

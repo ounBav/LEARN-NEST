@@ -90,6 +90,7 @@ type Query {
   getRoles: [Role!]!
   getRole(id: RoleFilter!): Role!
   searchTelegram(search: String!): [TelegramUser!]!
+  searchSticker(search: String!): Boolean!
 }
 
 input RoleFilter {
@@ -113,7 +114,10 @@ type Mutation {
   botSendMessage(input: BotMessageInput!): Boolean!
   botSendPollVote(poll: BotCreatePollVoteInput!): Boolean!
   checkUserTelegramAcc(phone: String!): ResultTelegram!
-  sendMessageByUserName(mess: SendMessageInput!): Boolean!
+  telegramSendMessage(mess: SendMessageInput!): Boolean!
+  addContact(input: AddContactInput!): Boolean!
+  telegramSendVerifyCode: Boolean!
+  startTelegramClient(input: SignInInput!): Boolean!
 }
 
 input LoginInput {
@@ -204,4 +208,17 @@ input BotCreatePollVoteInput {
 input SendMessageInput {
   userName: String
   message: String
+}
+
+input AddContactInput {
+  addPhonePrivacyException: Boolean!
+  username: String!
+  firstName: String!
+  lastName: String!
+  phone: String = ""
+}
+
+input SignInInput {
+  phone: String!
+  verifyCode: String!
 }

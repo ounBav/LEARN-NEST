@@ -3,7 +3,11 @@ import {
   TelegramApiService,
 } from '@lib/telegram-api';
 import { Injectable } from '@nestjs/common';
-import { SendMessageInput } from './telegram-client.input';
+import {
+  AddContactInput,
+  SendMessageInput,
+  SignInInput,
+} from './telegram-client.input';
 
 @Injectable()
 export class TelegramClientService {
@@ -16,7 +20,7 @@ export class TelegramClientService {
     return this.telegramApiService.checkAccByPhoneNumber(phoneNumber);
   }
 
-  async sendMessageByUserName(mess: SendMessageInput) {
+  async telegramSendMessage(mess: SendMessageInput) {
     return this.telegramApiService.sendMessageByUserName(
       mess.userName,
       mess.message,
@@ -25,5 +29,22 @@ export class TelegramClientService {
 
   async searchContact(search: string) {
     return this.telegramApiService.searchContact(search);
+  }
+
+  async addContact(input: AddContactInput) {
+    return this.telegramApiService.addContact(input);
+  }
+
+  async searchSticker(search: string) {
+    return this.telegramApiService.searchSticker(search);
+  }
+  async telegramSendVerifyCode() {
+    return this.telegramApiService.telegramSendVerifyCode();
+  }
+  async startTelegramClient(input: SignInInput) {
+    return this.telegramApiService.startTelegramClient(
+      input.phone,
+      input.verifyCode,
+    );
   }
 }
