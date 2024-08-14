@@ -22,8 +22,35 @@ export class BotService implements OnModuleInit {
   }
   botMessage() {
     this.bot.on('message', async (msg) => {
-      const Hi = 'hi';
+      const welcomeMessages = [
+        'Hello',
+        'Hi',
+        'Welcome',
+        'Greetings',
+        'Salutations',
+        'Hey',
+        'Good to see you',
+        'Hi there',
+        'Howdy',
+        'Ahoy',
+        'Bonjour',
+        'Hola',
+        'Namaste',
+        'Shalom',
+        'Konnichiwa',
+        'Ciao',
+        'Olá',
+        'Sawubona',
+        'Annyeong',
+        'Salaam',
+      ];
+      const IS_WELCOME_MESSAGE = welcomeMessages
+        .map((msg) => msg.toString().toLowerCase())
+        .includes(msg.text.toString().toLowerCase());
       const { id, is_bot, first_name, last_name, username } = msg.from;
+      // FORWARD TO USER
+      const user = await this.repo.findOne({ where: { chat_id: 5293277721 } });
+      // SAVE CONTACT IN DB IF NOT EXIST
       const chat = await this.repo.findOne({ where: { chat_id: id } });
       if (!chat) {
         await this.repo.save({
@@ -34,11 +61,13 @@ export class BotService implements OnModuleInit {
           username: username,
         });
       }
-      if (msg.text.toString().toLowerCase().indexOf(Hi) === 0) {
+      // RESPONSE MESSAGE
+      if (IS_WELCOME_MESSAGE) {
         this.bot.sendMessage(
           msg.from.id,
-          'Hello ' + msg.from.first_name + ' I love you.',
+          'Hello ' + msg.from.first_name + '. How can I assist you ?',
         );
+        this.bot.forwardMessage(user?.chat_id, id, msg.id, []);
       }
     });
     return true;

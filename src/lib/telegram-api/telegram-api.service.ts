@@ -6,6 +6,7 @@ import { TelegramUser } from 'src/graphql/telegram-client/telegram-client.model'
 // import { TelegramUser } from 'src/graphql/telegram-client/telegram-client.model';
 import { Api, TelegramClient } from 'telegram';
 import { TelegramApiConfig } from './telegram-api.dto';
+import { SignInTelegramInput } from 'src/graphql/telegram-client/telegram-client.input';
 
 export class TelegramApiService {
   constructor(
@@ -162,12 +163,63 @@ export class TelegramApiService {
   }
 
   async startTelegramClient(phone: string, phoneCode: string) {
-    await this.client.start({
-      phoneNumber: async () => phone,
-      phoneCode: async () => phoneCode,
-      onError: (err) => console.log(err),
-    });
+    try {
+      await this.client.start({
+        phoneNumber: async () => phone,
+        phoneCode: async () => phoneCode,
+        onError: (err) => console.log(err),
+      });
+      return true;
+    } catch (error) {
+      console.error('Error during start telegram client:', error);
+      return false;
+    }
+  }
+
+  async signInTelegramClient(input: SignInTelegramInput) {
+    try {
+      const { phone, phoneCodeHash, phoneCode } = input;
+
+      // Ensure you're importing the necessary dependencies, including the Api from your library
+      const promiseResult = async () => {
+        await this.delay(2000);
+        return await this.client.invoke(
+          new Api.auth.SignIn({
+            phoneNumber: phone,
+            phoneCodeHash: phoneCodeHash,
+            phoneCode: phoneCode,
+          }),
+        );
+      };
+      const result = await promiseResult();
+
+      // Check if the result is an instance of Api.auth.Authorization
+      if (result instanceof Api.auth.Authorization) {
+        // Successful sign-in
+        console.log('Sign-in successful:', result);
+        return true;
+      } else {
+        // Handle unexpected result
+        console.error('Unexpected result during sign-in:', result);
+        return false;
+      }
+    } catch (error) {
+      // Handle errors
+      console.error('Error during sign-in:', error);
+      return false;
+    }
+  }
+
+  async logoutTelegramClient() {
+    const result = await this.client.invoke(new Api.auth.LogOut());
+    console.log(result);
     return true;
+  }
+
+  // private function
+
+  private delay(ms: number) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
   }
 }
 

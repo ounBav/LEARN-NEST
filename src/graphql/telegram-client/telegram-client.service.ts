@@ -6,7 +6,8 @@ import { Injectable } from '@nestjs/common';
 import {
   AddContactInput,
   SendMessageInput,
-  SignInInput,
+  SignInTelegramInput,
+  StartTelegramInput,
 } from './telegram-client.input';
 
 @Injectable()
@@ -41,10 +42,17 @@ export class TelegramClientService {
   async telegramSendVerifyCode() {
     return this.telegramApiService.telegramSendVerifyCode();
   }
-  async startTelegramClient(input: SignInInput) {
+  async startTelegramClient(input: StartTelegramInput) {
     return this.telegramApiService.startTelegramClient(
       input.phone,
       input.verifyCode,
     );
+  }
+
+  async signInTelegramClient(input: SignInTelegramInput) {
+    return this.telegramApiService.signInTelegramClient(input);
+  }
+  async logoutTelegramClient() {
+    return this.telegramApiService.logoutTelegramClient();
   }
 }

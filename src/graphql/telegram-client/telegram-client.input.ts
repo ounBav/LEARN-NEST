@@ -31,10 +31,22 @@ export class AddContactInput {
 }
 
 @InputType()
-export class SignInInput {
+export class StartTelegramInput {
   @Field(() => String)
   phone!: string;
 
   @Field(() => String)
   verifyCode!: string;
+}
+
+@InputType()
+export class SignInTelegramInput {
+  @Field(() => String)
+  phone!: string;
+
+  @Field(() => String)
+  phoneCodeHash!: string;
+
+  @Field(() => String)
+  phoneCode!: string;
 }

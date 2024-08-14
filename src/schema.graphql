@@ -117,7 +117,9 @@ type Mutation {
   telegramSendMessage(mess: SendMessageInput!): Boolean!
   addContact(input: AddContactInput!): Boolean!
   telegramSendVerifyCode: Boolean!
-  startTelegramClient(input: SignInInput!): Boolean!
+  startTelegramClient(input: StartTelegramInput!): Boolean!
+  signInTelegramClient(input: SignInTelegramInput!): Boolean!
+  logOutTelegramClient: Boolean!
 }
 
 input LoginInput {
@@ -218,7 +220,13 @@ input AddContactInput {
   phone: String = ""
 }
 
-input SignInInput {
+input StartTelegramInput {
   phone: String!
   verifyCode: String!
+}
+
+input SignInTelegramInput {
+  phone: String!
+  phoneCodeHash: String!
+  phoneCode: String!
 }

@@ -4,7 +4,8 @@ import { ResultTelegram, TelegramUser } from './telegram-client.model';
 import {
   AddContactInput,
   SendMessageInput,
-  SignInInput,
+  SignInTelegramInput,
+  StartTelegramInput,
 } from './telegram-client.input';
 
 @Resolver(() => Boolean)
@@ -42,7 +43,17 @@ export class TelegramClientResolver {
   }
 
   @Mutation(() => Boolean)
-  startTelegramClient(@Args('input') input: SignInInput) {
+  startTelegramClient(@Args('input') input: StartTelegramInput) {
     return this.service.startTelegramClient(input);
+  }
+
+  @Mutation(() => Boolean)
+  signInTelegramClient(@Args('input') input: SignInTelegramInput) {
+    return this.service.signInTelegramClient(input);
+  }
+
+  @Mutation(() => Boolean)
+  logOutTelegramClient() {
+    return this.service.logoutTelegramClient();
   }
 }
